@@ -5,16 +5,14 @@ phases:
       - echo install step...
   pre_build:
     commands:
-      - echo logging in to AWS ECR...
-      - $(aws ecr get-login --no-include-email --region us-west-2)
+      - echo logging in to github...
+      - docker login ghcr.io --username bds1959 --password 44ca9a6db56ca6b7cc3ef3eb3f9b5b1edd4a4c52
   build:
     commands:
       - echo build Docker image on `date`
-      - cd src
-      - docker build -t sample-express-app:latest .
-      - docker tag sample-express-app:latest <your-ecr-url>/sample-express-app:latest
+      - docker build -t ghcr.io/bds1959/titan-app:latest .
   post_build:
     commands:
       - echo build Docker image complete `date`
-      - echo push latest Docker images to ECR...
-      - docker push <your-ecr-url>/sample-express-app:latest
+      - echo push latest Docker images to GitHub...
+      - docker push ghcr.io/bds1959/titan-app:latest
